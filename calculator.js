@@ -1,36 +1,37 @@
 /*
  * @Author: zq
- * @Date: 2020-08-02 21:22:08
+ * @Date: 2020-08-05 19:22:08
  * @LastEditors: zq
- * @LastEditTime: 2020-08-02 23:10:05
- * @Description: js保留小数精度计算方法
+ * @LastEditTime: 2020-08-05 19:22:08
+ * @Description: js计算相关
  */
 /**
  * 获取数字小数部分长度
  * @param {Number,String} number
- * @return {Number} 
+ * @return {Number}
  */
-function getDecimallength(number) {
-    return (new Number(number).toString().split(".")[1] || "").length;
+function getDecimalLength(number) {
+    return (Number(number).toString().split(".")[1] || "").length;
 }
 
 /**
  * 将小数放大为整数
  * @param {Number,String} number
- * @param {Number} digit : 小数点后移的位数
- * @return {Number} 
+ * @param {Number} digit 小数点后移的位数
+ * @return {Number}
  */
 function enlargeNumber(number, digit) {
-    return new Number(new Number(number).toFixed(digit).toString().replace(".", ""));
+    return Number(Number(number).toFixed(digit).toString().replace(".", ""));
 }
 /**
  * 相加
- * @param {Number,String} num1 
- * @param {Number,String} num2 
+ * @param {Number,String} num1
+ * @param {Number,String} num2
+ * @param {Number} fixes 保留的小数位数
  * @returns {Number}
  */
-function add(num1, num2, fixes) {
-    const maxLength = Math.max(getDecimallength(num1), getDecimallength(num2));
+function add(num1, num2, fixes = 2) {
+    const maxLength = Math.max(getDecimalLength(num1), getDecimalLength(num2));
     const multiple = Math.pow(10, maxLength);
 
     num1 = enlargeNumber(num1, maxLength);
@@ -38,17 +39,18 @@ function add(num1, num2, fixes) {
 
     const result = (num1 + num2) / multiple;
 
-    return result.toFixed(fixes || 2);
+    return Number(result.toFixed(fixes));
 }
 
 /**
  * 相减
- * @param {Number,String} num1 
- * @param {Number,String} num2 
+ * @param {Number,String} num1
+ * @param {Number,String} num2
+ * * @param {Number} fixes 保留的小数位数
  * @returns {Number}
  */
-function sub(num1, num2, fixes) {
-    const maxLength = Math.max(getDecimallength(num1), getDecimallength(num2));
+function sub(num1, num2, fixes = 2) {
+    const maxLength = Math.max(getDecimalLength(num1), getDecimalLength(num2));
     const multiple = Math.pow(10, maxLength);
 
     num1 = enlargeNumber(num1, maxLength);
@@ -56,17 +58,18 @@ function sub(num1, num2, fixes) {
 
     const result = (num1 - num2) / multiple;
 
-    return result.toFixed(fixes || 2);
+    return Number(result.toFixed(fixes));
 }
 
 /**
  * 相乘
- * @param {Number,String} num1 
- * @param {Number,String} num2 
+ * @param {Number,String} num1
+ * @param {Number,String} num2
+ * * @param {Number} fixes 保留的小数位数
  * @returns {Number}
  */
-function mul(num1, num2, fixes) {
-    const maxLength = Math.max(getDecimallength(num1), getDecimallength(num2));
+function mul(num1, num2, fixes = 2) {
+    const maxLength = Math.max(getDecimalLength(num1), getDecimalLength(num2));
     const multiple = Math.pow(10, maxLength * 2);
 
     num1 = enlargeNumber(num1, maxLength);
@@ -74,24 +77,25 @@ function mul(num1, num2, fixes) {
 
     const result = num1 * num2 / multiple;
 
-    return result.toFixed(fixes || 2);
+    return Number(result.toFixed(fixes));
 }
 
 /**
  * 相除
- * @param {Number,String} num1 
- * @param {Number,String} num2 
+ * @param {Number,String} num1
+ * @param {Number,String} num2
+ * * @param {Number} fixes 保留的小数位数
  * @returns {Number}
  */
-function div(num1, num2, fixes) {
-    const maxLength = Math.max(getDecimallength(num1), getDecimallength(num2));
+function div(num1, num2, fixes = 2) {
+    const maxLength = Math.max(getDecimalLength(num1), getDecimalLength(num2));
 
     num1 = enlargeNumber(num1, maxLength);
     num2 = enlargeNumber(num2, maxLength);
 
     const result = num1 / num2;
 
-    return result.toFixed(fixes || 2);
+    return Number(result.toFixed(fixes));
 }
 
 export {
